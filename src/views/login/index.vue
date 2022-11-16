@@ -48,17 +48,12 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('请输入用户名'))
-      } else {
-        callback()
-      }
+      callback()
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
@@ -69,7 +64,7 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
+        username: 'test',
         password: '123456'
       },
       loginRules: {

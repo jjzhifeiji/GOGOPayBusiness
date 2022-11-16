@@ -32,7 +32,6 @@
         搜索
       </el-button>
 
-
     </div>
 
     <div>
@@ -41,7 +40,6 @@
         <el-col ref="class_customer_list" class="test" :span="6" :xs="24" style="width:100%;">
 
           <el-table
-            :key="tableKey"
             v-loading="listLoading"
             :data="list"
             row-key="id"
@@ -102,7 +100,6 @@ import {MessageBox} from 'element-ui'
 import {
   getChangeOrderList
 } from '@/api/out-order'
-import {getsUserGroup} from '@/api/user'
 
 const status = [
   {id: '1', name: '待接单'},
@@ -171,9 +168,6 @@ export default {
       })
     },
     getUserGroup() {
-      getsUserGroup().then(response => {
-        this.userGroup = response
-      })
     },
     handleFilter() {
       this.listQuery.page = 1

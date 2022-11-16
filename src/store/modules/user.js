@@ -1,4 +1,4 @@
-import {login, logout, getInfo} from '@/api/admin'
+import {login, logout, getInfo} from '@/api/business'
 import {getToken, setToken, removeToken} from '@/utils/auth'
 import {resetRouter} from '@/router'
 import {MessageBox} from 'element-ui'
@@ -34,9 +34,10 @@ const actions = {
   login({commit}, userInfo) {
     const {username, password} = userInfo
     return new Promise((resolve, reject) => {
-      login({admin_name: username.trim(), pwd: password}).then(response => {
-        const {token, name, account, status, type, group_id, group_name, avatar} = response
+      login({account: username.trim(), pwd: password}).then(response => {
+        console.log("response")
         console.log(response)
+        const {token, name, account, status, type, group_id, group_name, avatar} = response
         commit('SET_TOKEN', token)
         setToken(token)
         resolve()

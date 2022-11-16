@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: 'Admin_AdminController.login',
+    url: 'Business_BusinessController.login',
     method: 'post',
     data
   })
@@ -10,14 +10,14 @@ export function login(data) {
 
 export function getInfo() {
   return request({
-    url: 'Admin_AdminController.getInfo',
+    url: 'Business_BusinessController.getInfo',
     method: 'post'
   })
 }
 
 export function logout() {
   return request({
-    url: 'Admin_AdminController.logout',
+    url: 'Business_BusinessController.logout',
     method: 'post'
   })
 }
