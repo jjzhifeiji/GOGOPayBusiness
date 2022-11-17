@@ -48,12 +48,7 @@
             highlight-current-row
             style="margin-top: 5px"
           >
-            <el-table-column
-              type="selection"
-              width="50"
-              :selectable="checkboxT"
-            />
-            <el-table-column label="ID" prop="id" width="100px" align="center"/>
+
             <el-table-column label="订单编号" prop="order_no" width="200px" align="center"/>
             <el-table-column label="订单金额" prop="order_amount" width="150px" align="center"/>
             <el-table-column label="创建时间" prop="create_time" align="center" width="180px"/>
@@ -62,17 +57,9 @@
                 <el-tag>{{ row.status | statusFilter }}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="类型" prop="type" align="center" width="100px">
-              <template slot-scope="{row}">
-                <el-tag>{{ row.type | typeFilter }}</el-tag>
-              </template>
-            </el-table-column>
-            <el-table-column label="接单用户" prop="user_name" align="center" width="100px"/>
-            <el-table-column label="接单账户" prop="user_account" align="center" width="100px"/>
-            <el-table-column label="收款名称" prop="pay_name" align="center" width="100px"/>
-            <el-table-column label="收款账户" prop="pay_account" align="center" width="100px"/>
-            <el-table-column label="收款备注" prop="pay_remark" align="center" width="100px"/>
-            <el-table-column label="收款信息" prop="pay_info" align="center" width="180px"/>
+            <el-table-column label="收款名称" prop="pay_name" align="center" width="150px"/>
+            <el-table-column label="收款账户" prop="pay_account" align="center" width="200px"/>
+            <el-table-column label="收款备注" prop="pay_remark" align="center" width="200px"/>
 
           </el-table>
 
@@ -156,7 +143,6 @@ export default {
   },
   created() {
     this.getList()
-    this.getUserGroup()
   },
   methods: {
     getList() {
@@ -167,14 +153,9 @@ export default {
         this.listLoading = false
       })
     },
-    getUserGroup() {
-    },
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
-    },
-    checkboxT(row, rowIndex) {
-      return true
     }
   }
 }

@@ -32,7 +32,6 @@
         搜索
       </el-button>
 
-
     </div>
 
     <div>
@@ -41,7 +40,6 @@
         <el-col ref="class_customer_list" class="test" :span="6" :xs="24" style="width:100%;">
 
           <el-table
-            :key="tableKey"
             v-loading="listLoading"
             :data="list"
             row-key="id"
@@ -51,20 +49,18 @@
             style="margin-top: 5px"
           >
 
-            <el-table-column label="订单编号" prop="order_no" width="200px" align="center"/>
-            <el-table-column label="订单金额" prop="order_amount" width="150px" align="center"/>
+            <el-table-column label="ID" prop="id" width="80px" align="center"/>
+            <el-table-column label="变动前" prop="before_amount" width="150px" align="center"/>
+            <el-table-column label="变动金额" prop="change_amount" width="150px" align="center"/>
+            <el-table-column label="变动后" prop="result_amount" width="150px" align="center"/>
             <el-table-column label="创建时间" prop="create_time" align="center" width="180px"/>
-            <el-table-column label="状态" prop="status" align="center" width="100px">
+            <el-table-column label="类型" prop="type" align="center" width="150px">
               <template slot-scope="{row}">
-                <el-tag>{{ row.status | statusFilter }}</el-tag>
+                <el-tag>{{ row.type | typeFilter }}</el-tag>
               </template>
             </el-table-column>
-
-            <el-table-column label="接单用户" prop="user_name" align="center" width="100px"/>
-            <el-table-column label="接单账户" prop="user_account" align="center" width="100px"/>
-            <el-table-column label="收款名称" prop="pay_name" align="center" width="100px"/>
-            <el-table-column label="收款账户" prop="pay_account" align="center" width="100px"/>
-            <el-table-column label="收款备注" prop="pay_remark" align="center" width="100px"/>
+            <el-table-column label="订单编号" prop="order_no" align="center" width="200px"/>
+            <el-table-column label="备注" prop="remark" align="center" width="300px"/>
 
           </el-table>
 
@@ -90,28 +86,16 @@ import Pagination from '@/components/Pagination'
 import {MessageBox} from 'element-ui'
 
 import {
-  getChangeOrderList
-} from '@/api/out-order'
-
-const status = [
-  {id: '1', name: '待通过'},
-  {id: '2', name: '待付款'},
-  {id: '3', name: '待确认'},
-  {id: '4', name: '已确认'},
-  {id: '5', name: '已取消'}
-]
+  getsAmountLog
+} from '@/api/business'
 
 const typeStatus = [
-  {id: '1', name: '充值'},
-  {id: '2', name: '代付'},
-  {id: '3', name: '商户提现'},
-  {id: '4', name: '用户提现'}
+  {id: '1', name: '收款'},
+  {id: '2', name: '收款手续费'},
+  {id: '3', name: '代付'},
+  {id: '4', name: '代付手续费'},
+  {id: '5', name: '提现'}
 ]
-
-const statusFilterKeyValue = status.reduce((acc, cur) => {
-  acc[cur.id] = cur.name
-  return acc
-}, {})
 
 const typeFilterKeyValue = typeStatus.reduce((acc, cur) => {
   acc[cur.id] = cur.name
@@ -119,13 +103,10 @@ const typeFilterKeyValue = typeStatus.reduce((acc, cur) => {
 }, {})
 
 export default {
-  name: 'BusinessOutOrder',
+  name: 'OutOrder',
   // eslint-disable-next-line vue/no-unused-components
   components: {Pagination},
   filters: {
-    statusFilter(key) {
-      return statusFilterKeyValue[key]
-    },
     typeFilter(key) {
       return typeFilterKeyValue[key]
     }
@@ -136,10 +117,9 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
-        name: '',
         start_time: '',
         end_time: '',
-        type: 3,
+        type: '',
         page: 1,
         limit: 20
       },
@@ -152,7 +132,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      getChangeOrderList(this.listQuery).then(response => {
+      getsAmountLog(this.listQuery).then(response => {
         this.list = response.data
         this.total = response.total
         this.listLoading = false

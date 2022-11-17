@@ -85,6 +85,21 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/record',
+    component: Layout,
+    redirect: '/record',
+    name: 'Record',
+    meta: {title: '对账记录', icon: 'el-icon-office-building'},
+    children: [
+      {
+        path: 'record',
+        name: 'All Record',
+        component: () => import('@/views/record/index'),
+        meta: {title: '记录', icon: 'el-icon-notebook-1'}
+      }
+    ]
+  },
+  {
     path: '/report',
     component: Layout,
     redirect: '/report',

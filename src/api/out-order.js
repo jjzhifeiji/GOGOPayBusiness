@@ -11,9 +11,9 @@ export function getChangeOrderList(params) {
   })
 }
 
-export function withdrawal(params) {
+export function createOutOrder(params) {
   return request({
-    url: 'OutOrder_OutOrderController.withdrawal',
+    url: 'OutOrder_OutOrderController.createOutOrder',
     method: 'post',
     params
   })

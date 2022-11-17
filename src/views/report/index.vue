@@ -92,18 +92,16 @@ export default {
     }
   },
   created() {
-    this.getsReport()
+    this.getList()
   },
   methods: {
-    getsReport() {
-      this.listLoading = true
-
-      getsReport(this.listQuery).then(response => {
-        this.list = response.items
-        this.total = response.total
-
-        this.listLoading = false
-      })
+    getList() {
+      // this.listLoading = true
+      // getsReport(this.listQuery).then(response => {
+      //   this.list = response.items
+      //   this.total = response.total
+      //   this.listLoading = false
+      // })
     },
     handleFilter() {
       this.listQuery.page = 1

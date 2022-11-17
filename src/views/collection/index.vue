@@ -35,7 +35,6 @@
 
       <el-table-column label="订单编号" prop="order_no" width="200px" align="center"/>
       <el-table-column label="订单金额" prop="order_amount" width="150px" align="center"/>
-      <el-table-column label="用户" prop="user_name" align="center" width="100px"/>
       <el-table-column label="商户" prop="business_name" align="center" width="100px"/>
       <el-table-column label="状态" prop="status" width="150px" align="center">
         <template slot-scope="{row}">

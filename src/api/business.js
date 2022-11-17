@@ -21,3 +21,11 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getsAmountLog(params) {
+  return request({
+    url: 'Business_BusinessController.getsAmountLog',
+    method: 'post',
+    params
+  })
+}
