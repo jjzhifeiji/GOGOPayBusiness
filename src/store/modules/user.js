@@ -74,7 +74,7 @@ const actions = {
       type: 'warning'
     }).then(() => {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
+        // logout(state.token).then(() => {
           removeToken() // must remove  token  first
           resetRouter()
           commit('RESET_STATE')
@@ -85,7 +85,7 @@ const actions = {
         }).catch(error => {
           reject(error)
         })
-      })
+      // })
     })
   },
 

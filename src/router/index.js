@@ -99,21 +99,21 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/report',
-    component: Layout,
-    redirect: '/report',
-    name: 'Report',
-    meta: {title: '报表管理', icon: 'el-icon-office-building'},
-    children: [
-      {
-        path: 'report',
-        name: 'All Report',
-        component: () => import('@/views/report/index'),
-        meta: {title: '总报表', icon: 'el-icon-notebook-1'}
-      }
-    ]
-  },
+  // {
+  //   path: '/report',
+  //   component: Layout,
+  //   redirect: '/report',
+  //   name: 'Report',
+  //   meta: {title: '报表管理', icon: 'el-icon-office-building'},
+  //   children: [
+  //     {
+  //       path: 'report',
+  //       name: 'All Report',
+  //       component: () => import('@/views/report/index'),
+  //       meta: {title: '总报表', icon: 'el-icon-notebook-1'}
+  //     }
+  //   ]
+  // },
   // 404 page must be placed at the end !!!
   {path: '*', redirect: '/404', hidden: true}
 ]
