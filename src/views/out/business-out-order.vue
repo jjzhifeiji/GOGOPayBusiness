@@ -1,27 +1,21 @@
 <template>
   <div class="app-container">
     <div class="filter-container" style="margin-bottom: 10px;">
-      <el-input
-        v-model="listQuery.name"
-        placeholder="姓名/手机号码"
-        style="width: 200px;margin-left: 5px;"
+      <el-select
+        v-model="listQuery.status"
+        placeholder="状态"
         class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-
-      <el-date-picker
-        v-model="listQuery.start_time"
-        value-format="timestamp"
-        style="margin-left: 10px;width:150px;"
-        placeholder="最近联系时间段"
-      />
-
-      <el-date-picker
-        v-model="listQuery.end_time"
-        value-format="timestamp"
-        style="margin-left: 10px;width: 150px;"
-        placeholder="最近联系时间段"
-      />
+        clearable
+        @change="handleFilter"
+      >
+        <el-option
+          v-for="item in status"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        >
+        </el-option>
+      </el-select>
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
@@ -41,7 +35,7 @@
         <el-col ref="class_customer_list" class="test" :span="6" :xs="24" style="width:100%;">
 
           <el-table
-            :key="tableKey"
+            
             v-loading="listLoading"
             :data="list"
             row-key="id"
@@ -51,20 +45,20 @@
             style="margin-top: 5px"
           >
 
-            <el-table-column label="订单编号" prop="order_no" width="200px" align="center"/>
-            <el-table-column label="订单金额" prop="order_amount" width="150px" align="center"/>
-            <el-table-column label="创建时间" prop="create_time" align="center" width="180px"/>
-            <el-table-column label="状态" prop="status" align="center" width="100px">
+            <el-table-column label="订单编号" prop="order_no" minWidth="200px" align="center"/>
+            <el-table-column label="订单金额" prop="order_amount" minWidth="150px" align="center"/>
+            <el-table-column label="创建时间" prop="create_time" align="center" minWidth="180px"/>
+            <el-table-column label="状态" prop="status" align="center" minWidth="100px">
               <template slot-scope="{row}">
                 <el-tag>{{ row.status | statusFilter }}</el-tag>
               </template>
             </el-table-column>
 
-            <el-table-column label="接单用户" prop="user_name" align="center" width="100px"/>
-            <el-table-column label="接单账户" prop="user_account" align="center" width="100px"/>
-            <el-table-column label="收款名称" prop="pay_name" align="center" width="100px"/>
-            <el-table-column label="收款账户" prop="pay_account" align="center" width="100px"/>
-            <el-table-column label="收款备注" prop="pay_remark" align="center" width="100px"/>
+            <el-table-column label="接单用户" prop="user_name" align="center" minWidth="100px"/>
+            <el-table-column label="接单账户" prop="user_account" align="center" minWidth="100px"/>
+            <el-table-column label="收款名称" prop="pay_name" align="center" minWidth="100px"/>
+            <el-table-column label="收款账户" prop="pay_account" align="center" minWidth="100px"/>
+            <el-table-column label="收款备注" prop="pay_remark" align="center" minWidth="100px"/>
 
           </el-table>
 
@@ -136,14 +130,13 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
-        name: '',
-        start_time: '',
-        end_time: '',
+        status: undefined,
         type: 3,
         page: 1,
         limit: 20
       },
-      userGroup: []
+      userGroup: [],
+      status,
     }
   },
   created() {
@@ -153,8 +146,8 @@ export default {
     getList() {
       this.listLoading = true
       getChangeOrderList(this.listQuery).then(response => {
-        this.list = response.data
-        this.total = response.total
+        this.list = response.data;
+        this.total = response.allnum;
         this.listLoading = false
       })
     },

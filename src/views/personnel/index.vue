@@ -47,7 +47,7 @@
     </div>
 
     <el-table
-      :key="tableKey"
+      
       v-loading="listLoading"
       :data="list"
       row-key="id"

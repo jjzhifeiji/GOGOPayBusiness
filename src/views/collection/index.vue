@@ -1,14 +1,21 @@
 <template>
   <div class="app-container">
     <div class="filter-container" style="margin-bottom: 10px;">
-      <el-input
-        v-model="listQuery.name"
-        placeholder="姓名/手机号码"
-        style="width: 200px;margin-left: 5px;"
+      <el-select
+        v-model="listQuery.status"
+        placeholder="状态"
         class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-
+        clearable
+        @change="handleFilter"
+      >
+        <el-option
+          v-for="item in status"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        >
+        </el-option>
+      </el-select>
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
@@ -22,7 +29,7 @@
     </div>
 
     <el-table
-      :key="tableKey"
+      
       v-loading="listLoading"
       :data="list"
       row-key="id"
@@ -33,22 +40,22 @@
       @selection-change="selectCall"
     >
 
-      <el-table-column label="订单编号" prop="order_no" width="200px" align="center"/>
-      <el-table-column label="订单金额" prop="order_amount" width="150px" align="center"/>
-      <el-table-column label="商户" prop="business_name" align="center" width="100px"/>
-      <el-table-column label="状态" prop="status" width="150px" align="center">
+      <el-table-column label="订单编号" prop="order_no" minWidth="200px" align="center"/>
+      <el-table-column label="订单金额" prop="order_amount" minWidth="150px" align="center"/>
+      <el-table-column label="商户" prop="business_name" align="center" minWidth="100px"/>
+      <el-table-column label="状态" prop="status" minWidth="150px" align="center">
         <template slot-scope="{row}">
           <el-tag>{{ row.status | statusFilter }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="支付类型" prop="pay_type" width="150px" align="center">
+      <el-table-column label="支付类型" prop="pay_type" minWidth="150px" align="center">
         <template slot-scope="{row}">
           <el-tag>{{ row.pay_type | payTypeFilter }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="最近更新时间" prop="update_time" align="center" width="180px"/>
-      <el-table-column label="通知状态" prop="notify_status" align="center" width="50px"/>
-      <el-table-column label="操作" align="center" width="80px" class-name="small-padding fixed-width">
+      <el-table-column label="最近更新时间" prop="update_time" align="center" minWidth="180px"/>
+      <el-table-column label="通知状态" prop="notify_status" align="center" minWidth="50px"/>
+      <el-table-column label="操作" align="center" minWidth="80px" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             查看
@@ -113,15 +120,15 @@ export default {
   },
   data() {
     return {
-      tableKey: 0,
       list: [],
       total: 0,
       listLoading: true,
       listQuery: {
+        status: undefined,
         page: 1,
         limit: 20
       },
-      status
+      status,
     }
   },
   created() {
@@ -132,7 +139,7 @@ export default {
       this.listLoading = true
       getsCollectOrder(this.listQuery).then(response => {
         this.list = response.data
-        this.total = response.total
+        this.total = response.allnum
         this.listLoading = false
       }).catch(error => {
         this.listLoading = false

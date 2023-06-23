@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">登录</h3>
+        <h3 class="title">商户登录</h3>
       </div>
 
       <el-form-item prop="username">
@@ -57,18 +57,18 @@ export default {
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('密码不能小于六位'))
+        callback(new Error('密码不能小于六位！'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'test',
-        password: '123456'
+        username: '',
+        password: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        username: [{ required: true, trigger: 'blur', message: '账号不能为空！' }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,

@@ -1,27 +1,21 @@
 <template>
   <div class="app-container">
     <div class="filter-container" style="margin-bottom: 10px;">
-      <el-input
-        v-model="listQuery.name"
-        placeholder="姓名/手机号码"
-        style="width: 200px;margin-left: 5px;"
+      <el-select
+        v-model="listQuery.type"
+        placeholder="类型"
         class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-
-      <el-date-picker
-        v-model="listQuery.start_time"
-        value-format="timestamp"
-        style="margin-left: 10px;width:150px;"
-        placeholder="最近联系时间段"
-      />
-
-      <el-date-picker
-        v-model="listQuery.end_time"
-        value-format="timestamp"
-        style="margin-left: 10px;width: 150px;"
-        placeholder="最近联系时间段"
-      />
+        clearable
+        @change="handleFilter"
+      >
+        <el-option
+          v-for="item in typeStatus"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        >
+        </el-option>
+      </el-select>
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
@@ -49,18 +43,18 @@
             style="margin-top: 5px"
           >
 
-            <el-table-column label="ID" prop="id" width="80px" align="center"/>
-            <el-table-column label="变动前" prop="before_amount" width="150px" align="center"/>
-            <el-table-column label="变动金额" prop="change_amount" width="150px" align="center"/>
-            <el-table-column label="变动后" prop="result_amount" width="150px" align="center"/>
-            <el-table-column label="创建时间" prop="create_time" align="center" width="180px"/>
-            <el-table-column label="类型" prop="type" align="center" width="150px">
+            <el-table-column label="ID" prop="id" minWidth="80px" align="center"/>
+            <el-table-column label="变动前" prop="before_amount" minWidth="150px" align="center"/>
+            <el-table-column label="变动金额" prop="change_amount" minWidth="150px" align="center"/>
+            <el-table-column label="变动后" prop="result_amount" minWidth="150px" align="center"/>
+            <el-table-column label="创建时间" prop="create_time" align="center" minWidth="180px"/>
+            <el-table-column label="类型" prop="type" align="center" minWidth="150px">
               <template slot-scope="{row}">
                 <el-tag>{{ row.type | typeFilter }}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="订单编号" prop="order_no" align="center" width="200px"/>
-            <el-table-column label="备注" prop="remark" align="center" width="300px"/>
+            <el-table-column label="订单编号" prop="order_no" align="center" minWidth="200px"/>
+            <el-table-column label="备注" prop="remark" align="center" minWidth="300px"/>
 
           </el-table>
 
@@ -117,13 +111,12 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
-        start_time: '',
-        end_time: '',
         type: '',
         page: 1,
         limit: 20
       },
-      userGroup: []
+      userGroup: [],
+      typeStatus,
     }
   },
   created() {
