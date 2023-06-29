@@ -29,3 +29,11 @@ export function getsAmountLog(params) {
     params
   })
 }
+
+export function createGoogleAuth(params) {
+  return request({
+    url: 'Business_BusinessController.CreateGoogleAuthenticator',
+    method: 'post',
+    params
+  })
+}

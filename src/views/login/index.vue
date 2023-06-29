@@ -40,6 +40,22 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
+      <el-form-item prop="code">
+        <span class="svg-container">
+          <svg-icon icon-class="verify" />
+        </span>
+        <el-input
+          :key="passwordType"
+          ref="code"
+          v-model="loginForm.code"
+          type="text"
+          placeholder="谷歌验证码"
+          name="code"
+          tabindex="2"
+          auto-complete="on"
+          @keyup.enter.native="handleLogin"
+        />
+      </el-form-item>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
@@ -52,9 +68,6 @@
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      callback()
-    }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
         callback(new Error('密码不能小于六位！'))
@@ -65,7 +78,8 @@ export default {
     return {
       loginForm: {
         username: '',
-        password: ''
+        password: '',
+        code: '',
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '账号不能为空！' }],

@@ -8,7 +8,8 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    status: '',
   }
 }
 
@@ -26,15 +27,18 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
-  }
+  },
+  SET_STATUS: (state, status) => {
+    state.status = status
+  },
 }
 
 const actions = {
   // user login
   login({commit}, userInfo) {
-    const {username, password} = userInfo
+    const {username, password, code} = userInfo
     return new Promise((resolve, reject) => {
-      login({account: username.trim(), pwd: password}).then(response => {
+      login({account: username.trim(), pwd: password, code}).then(response => {
         console.log("response")
         console.log(response)
         const {token, name, account, status, type, group_id, group_name, avatar} = response
@@ -59,6 +63,7 @@ const actions = {
 
         commit('SET_NAME', name)
         commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
+        commit('SET_STATUS', status)
         resolve(response)
       }).catch(error => {
         reject(error)
