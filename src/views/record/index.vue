@@ -6,6 +6,7 @@
         placeholder="类型"
         class="filter-item"
         clearable
+        size="small"
         @change="handleFilter"
       >
         <el-option
@@ -13,13 +14,13 @@
           :key="item.id"
           :label="item.name"
           :value="item.id"
-        >
-        </el-option>
+        />
       </el-select>
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
         type="primary"
+        size="small"
         icon="el-icon-search"
         @click="handleFilter"
       >
@@ -43,18 +44,18 @@
             style="margin-top: 5px"
           >
 
-            <el-table-column label="ID" prop="id" minWidth="80px" align="center"/>
-            <el-table-column label="变动前" prop="before_amount" minWidth="150px" align="center"/>
-            <el-table-column label="变动金额" prop="change_amount" minWidth="150px" align="center"/>
-            <el-table-column label="变动后" prop="result_amount" minWidth="150px" align="center"/>
-            <el-table-column label="创建时间" prop="create_time" align="center" minWidth="180px"/>
-            <el-table-column label="类型" prop="type" align="center" minWidth="150px">
+            <el-table-column label="ID" prop="id" min-width="80px" align="center" />
+            <el-table-column label="变动前" prop="before_amount" min-width="150px" align="center" />
+            <el-table-column label="变动金额" prop="change_amount" min-width="150px" align="center" />
+            <el-table-column label="变动后" prop="result_amount" min-width="150px" align="center" />
+            <el-table-column label="创建时间" prop="create_time" align="center" min-width="180px" />
+            <el-table-column label="类型" prop="type" align="center" min-width="150px">
               <template slot-scope="{row}">
                 <el-tag>{{ row.type | typeFilter }}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="订单编号" prop="order_no" align="center" minWidth="200px"/>
-            <el-table-column label="备注" prop="remark" align="center" minWidth="300px"/>
+            <el-table-column label="订单编号" prop="order_no" align="center" min-width="200px" />
+            <el-table-column label="备注" prop="remark" align="center" min-width="300px" />
 
           </el-table>
 
@@ -77,18 +78,14 @@
 
 <script>
 import Pagination from '@/components/Pagination'
-import {MessageBox} from 'element-ui'
-
-import {
-  getsAmountLog
-} from '@/api/business'
+import { getsAmountLog } from '@/api/business'
 
 const typeStatus = [
-  {id: '1', name: '收款'},
-  {id: '2', name: '收款手续费'},
-  {id: '3', name: '代付'},
-  {id: '4', name: '代付手续费'},
-  {id: '5', name: '提现'}
+  { id: '1', name: '收款' },
+  { id: '2', name: '收款手续费' },
+  { id: '3', name: '代付' },
+  { id: '4', name: '代付手续费' },
+  { id: '5', name: '提现' }
 ]
 
 const typeFilterKeyValue = typeStatus.reduce((acc, cur) => {
@@ -99,7 +96,7 @@ const typeFilterKeyValue = typeStatus.reduce((acc, cur) => {
 export default {
   name: 'OutOrder',
   // eslint-disable-next-line vue/no-unused-components
-  components: {Pagination},
+  components: { Pagination },
   filters: {
     typeFilter(key) {
       return typeFilterKeyValue[key]
@@ -116,7 +113,7 @@ export default {
         limit: 20
       },
       userGroup: [],
-      typeStatus,
+      typeStatus
     }
   },
   created() {

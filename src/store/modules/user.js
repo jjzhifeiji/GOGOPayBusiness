@@ -1,7 +1,7 @@
-import {login, logout, getInfo} from '@/api/business'
-import {getToken, setToken, removeToken} from '@/utils/auth'
-import {resetRouter} from '@/router'
-import {MessageBox} from 'element-ui'
+import { login, getInfo } from '@/api/business'
+import { getToken, setToken, removeToken } from '@/utils/auth'
+import { resetRouter } from '@/router'
+import { MessageBox } from 'element-ui'
 import store from '@/store'
 
 const getDefaultState = () => {
@@ -9,7 +9,7 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
-    status: '',
+    status: ''
   }
 }
 
@@ -30,18 +30,18 @@ const mutations = {
   },
   SET_STATUS: (state, status) => {
     state.status = status
-  },
+  }
 }
 
 const actions = {
   // user login
-  login({commit}, userInfo) {
-    const {username, password, code} = userInfo
+  login({ commit }, userInfo) {
+    const { username, password, code } = userInfo
     return new Promise((resolve, reject) => {
-      login({account: username.trim(), pwd: password, code}).then(response => {
-        console.log("response")
+      login({ account: username.trim(), pwd: password, code }).then(response => {
+        console.log('response')
         console.log(response)
-        const {token, name, account, status, type, group_id, group_name, avatar} = response
+        const { token } = response
         commit('SET_TOKEN', token)
         setToken(token)
         resolve()
@@ -52,10 +52,10 @@ const actions = {
   },
 
   // get user info
-  getInfo({commit, state}) {
+  getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const {account, id, name, status, token, type, desc} = response
+        const { id, name, status } = response
 
         if (!id) {
           return reject('请重新登录')
@@ -72,7 +72,7 @@ const actions = {
   },
 
   // user logout
-  logout({commit, state}) {
+  logout({ commit, state }) {
     MessageBox.confirm('确认退出？', '退出', {
       confirmButtonText: '退出',
       cancelButtonText: '取消',
@@ -80,22 +80,23 @@ const actions = {
     }).then(() => {
       return new Promise((resolve, reject) => {
         // logout(state.token).then(() => {
-          removeToken() // must remove  token  first
-          resetRouter()
-          commit('RESET_STATE')
-          resolve()
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
-        }).catch(error => {
-          reject(error)
+        removeToken() // must remove  token  first
+        resetRouter()
+        commit('RESET_STATE')
+        resolve()
+        store.dispatch('user/resetToken').then(() => {
+          location.reload()
         })
+      }).catch(error => {
+        console.log(error)
+        // reject(error)
+      })
       // })
     })
   },
 
   // remove token
-  resetToken({commit}) {
+  resetToken({ commit }) {
     return new Promise(resolve => {
       removeToken() // must remove  token  first
       commit('RESET_STATE')

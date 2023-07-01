@@ -30,36 +30,21 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: {title: '首页', icon: 'dashboard'}
+      meta: { title: '首页', icon: 'dashboard' }
     }]
-  },
-  {
-    path: '/platform',
-    component: Layout,
-    redirect: '/platform',
-    name: 'Platform',
-    meta: {title: '商户信息', icon: 'el-icon-s-shop'},
-    children: [
-      {
-        path: 'Platform',
-        name: 'Platform',
-        component: () => import('@/views/platform/index'),
-        meta: {title: '商户信息', icon: 'el-icon-s-grid'}
-      }
-    ]
   },
   {
     path: '/collection',
     component: Layout,
     redirect: '/collection',
     name: 'Collection',
-    meta: {title: '代收', icon: 'el-icon-folder-opened'},
+    meta: { title: '代收', icon: 'el-icon-folder-opened' },
     children: [
       {
         path: 'all',
         name: 'all',
         component: () => import('@/views/collection/index'),
-        meta: {title: '全部订单', icon: 'el-icon-tickets'}
+        meta: { title: '全部订单', icon: 'el-icon-tickets' }
       }
     ]
   },
@@ -68,19 +53,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/payment',
     name: 'Payment',
-    meta: {title: '出款', icon: 'el-icon-user-solid'},
+    meta: { title: '出款订单', icon: 'el-icon-s-finance' },
     children: [
       {
         path: 'out',
         name: '代付',
         component: () => import('@/views/out/out-order'),
-        meta: {title: '代付订单', icon: 'el-icon-user'}
+        meta: { title: '代付订单', icon: 'el-icon-bank-card' }
       },
       {
         path: 'businessOut',
         name: '提现',
         component: () => import('@/views/out/business-out-order'),
-        meta: {title: '提现', icon: 'el-icon-user'}
+        meta: { title: '提现订单', icon: 'el-icon-money' }
       }
     ]
   },
@@ -89,13 +74,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/record',
     name: 'Record',
-    meta: {title: '对账记录', icon: 'el-icon-office-building'},
+    meta: { title: '对账记录', icon: 'el-icon-office-building' },
     children: [
       {
         path: 'record',
         name: 'All Record',
         component: () => import('@/views/record/index'),
-        meta: {title: '记录', icon: 'el-icon-notebook-1'}
+        meta: { title: '记录', icon: 'el-icon-notebook-1' }
       }
     ]
   },
@@ -115,12 +100,12 @@ export const constantRoutes = [
   //   ]
   // },
   // 404 page must be placed at the end !!!
-  {path: '*', redirect: '/404', hidden: true}
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({y: 0}),
+  scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
 

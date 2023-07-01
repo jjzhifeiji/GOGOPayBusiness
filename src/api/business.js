@@ -37,3 +37,20 @@ export function createGoogleAuth(params) {
     params
   })
 }
+// 修改密码
+export function ModPwd(params) {
+  return request({
+    url: 'Business_BusinessController.ModPwd',
+    method: 'post',
+    params
+  })
+}
+
+export function getHomeData(params) {
+  return request({
+    url: 'Business_BusinessController.GetBusinessHome',
+    method: 'post',
+    params
+  })
+}
+

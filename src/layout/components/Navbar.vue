@@ -11,7 +11,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -27,7 +27,10 @@
               active-value="1"
               inactive-value="0"
               @change="getGoogelCode"
-            ></el-switch>
+            />
+          </el-dropdown-item>
+          <el-dropdown-item class="user-dropdown" @click.native="()=> modifyVisible = true">
+            修改密码
           </el-dropdown-item>
           <!-- <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
             <el-dropdown-item>Github</el-dropdown-item>
@@ -51,7 +54,7 @@
       <div>
         <p>2.扫码绑定(使用Geogle身份验证器 APP 扫码)</p>
       </div>
-      <div id="qrcode"></div>
+      <div id="qrcode" />
       <p style="text-align: center">
         请使用“Google 身份验证器APP”
         绑定，各大软件商店均可下载该APP，支持安卓、IOS系统。
@@ -61,69 +64,72 @@
         绑定,以免出现无法登录的情况。
       </p>
     </el-dialog>
+    <ModifyPassword :visible.sync="modifyVisible" />
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Breadcrumb from "@/components/Breadcrumb";
-import Hamburger from "@/components/Hamburger";
-import { createGoogleAuth } from '@/api/business';
-import QRCode from "qrcodejs2";
-import store from '@/store';
-
+import { mapGetters } from 'vuex'
+import Breadcrumb from '@/components/Breadcrumb'
+import Hamburger from '@/components/Hamburger'
+import { createGoogleAuth } from '@/api/business'
+import QRCode from 'qrcodejs2'
+import store from '@/store'
+import ModifyPassword from '@/components/ModifyPassword'
 export default {
   components: {
     Breadcrumb,
     Hamburger,
-  },
-  computed: {
-    ...mapGetters(["sidebar", "avatar"]),
+    ModifyPassword
   },
   data() {
     return {
-      auth: "0",
+      auth: '0',
       dialogVisible: false,
-      account: "",
-      serect: "",
-    };
+      account: '',
+      serect: '',
+      modifyVisible: false
+    }
+  },
+  computed: {
+    ...mapGetters(['sidebar', 'avatar'])
   },
   created() {
     this.auth = `${store.getters.status}`
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch("app/toggleSideBar");
+      this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      await this.$store.dispatch("user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      await this.$store.dispatch('user/logout')
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
-    //获取谷歌验证码
+    // 获取谷歌验证码
     getGoogelCode() {
       createGoogleAuth({ status: this.auth })
         .then((res) => {
           if (this.auth == 0) {
-            this.$message.success("操作成功");
+            this.$message.success('操作成功')
           } else {
-            this.dialogVisible = true;
-            this.account = res.name;
-            this.serect = res.code;
+            this.dialogVisible = true
+            this.account = res.name
+            this.serect = res.code
             this.$nextTick(() => {
-              let qrcode = new QRCode("qrcode", {
+              const qrcode = new QRCode('qrcode', {
                 width: 200,
                 height: 200,
-                text: res.qr, // 二维码地址
-              });
-            });
+                text: res.qr // 二维码地址
+              })
+            })
           }
         })
         .catch((err) => {
-          console.log(err);
-        });
-    },
-  },
-};
+          console.log(err)
+        })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

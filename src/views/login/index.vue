@@ -79,7 +79,7 @@ export default {
       loginForm: {
         username: '',
         password: '',
-        code: '',
+        code: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '账号不能为空！' }],
